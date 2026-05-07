@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/app_router.dart';
 import 'auth_provider.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -13,16 +14,16 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
           children: [
             TextField(controller: emailController),
             TextField(controller: passController),
-      
+            
             if (authState.isLoading)
               CircularProgressIndicator(),
-      
+            
             ElevatedButton(
               onPressed: () {
                 ref.read(authProvider.notifier).login(
@@ -32,10 +33,10 @@ class LoginScreen extends ConsumerWidget {
               },
               child: Text("Login"),
             ),
-      
+            
             if (authState.user != null)
               Text("Welcome ${authState.user}"),
-      
+            
             if (authState.error != null)
               Text(authState.error!),
           ],
